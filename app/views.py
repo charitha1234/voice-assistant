@@ -16,7 +16,7 @@ encoder.load_model(encoder_weights)
 synthesizer = Synthesizer(syn_dir)
 vocoder.load_model(vocoder_weights)
 
-@app.route('/')
+@app.route('/',methods=["GET","POST"])
 def index():
     text = "Tonight, I am asking you to believe in Joe and Kamala’s ability to lead this country"
     in_fpath = Path("audio.wav")
