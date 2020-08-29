@@ -1,7 +1,6 @@
 from app import app
 import base64
 from flask import request, render_template
-from IPython.utils import io
 from synthesizer.inference import Synthesizer
 from encoder import inference as encoder
 from vocoder import inference as vocoder
@@ -25,8 +24,7 @@ def index():
     original_wav, sampling_rate = librosa.load(in_fpath)
     preprocessed_wav = encoder.preprocess_wav(original_wav, sampling_rate)
     embed = encoder.embed_utterance(preprocessed_wav)
-    with io.capture_output() as captured:
-        specs = synthesizer.synthesize_spectrograms([text], [embed])
+    specs = synthesizer.synthesize_spectrograms([text], [embed])
     generated_wav = vocoder.infer_waveform(specs[0])
     generated_wav = np.pad(generated_wav, (0, synthesizer.sample_rate), mode="constant")
     with open('generated.wav','wb+') as f:
