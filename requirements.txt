@@ -5,3 +5,11 @@ Jinja2==2.10
 MarkupSafe==1.1.1
 uWSGI==2.0.18
 Werkzeug==0.15.0
+tensorflow-gpu==1.5
+matplotlib>=2.0.2
+numpy>=1.14.0
+scipy>=1.0.0
+tqdm
+Unidecode
+inflect
+numba==0.48
