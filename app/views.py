@@ -20,6 +20,7 @@ vocoder.load_model(vocoder_weights)
 def index():
     text = "Tonight, I am asking you to believe in Joe and Kamala’s ability to lead this country"
     in_fpath = Path("audio.wav")
+    print("path,,,,",in_fpath)
     reprocessed_wav = encoder.preprocess_wav(in_fpath)
     original_wav, sampling_rate = librosa.load(in_fpath)
     preprocessed_wav = encoder.preprocess_wav(original_wav, sampling_rate)
