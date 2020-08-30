@@ -15,3 +15,4 @@ tqdm
 Unidecode
 inflect
 numba==0.48
+torch==1.6.0
