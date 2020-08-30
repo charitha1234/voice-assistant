@@ -1,6 +1,6 @@
 from app import app
 import base64
-from flask import request, render_audiolate,send_file
+from flask import request, render_template,send_file
 from synthesizer.inference import Synthesizer
 from encoder import inference as encoder
 from vocoder import inference as vocoder
