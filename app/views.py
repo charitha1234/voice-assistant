@@ -29,4 +29,4 @@ def index():
     generated_wav = vocoder.infer_waveform(specs[0])
     generated_wav = np.pad(generated_wav, (0, synthesizer.sample_rate), mode="constant")
     sf.write("demo_output.wav", generated_wav.astype(np.float32), synthesizer.sample_rate)
-    return send_file("demo_output.wav")
+    return send_file("../demo_output.wav")
