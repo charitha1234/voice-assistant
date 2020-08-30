@@ -1,6 +1,6 @@
 from app import app
 import base64
-from flask import request, render_template,send_file
+from flask import request, render_audiolate,send_file
 from synthesizer.inference import Synthesizer
 from encoder import inference as encoder
 from vocoder import inference as vocoder
@@ -30,4 +30,4 @@ def index():
     generated_wav = np.pad(generated_wav, (0, synthesizer.sample_rate), mode="constant")
     with open('generated.wav','wb+') as f:
         f.write(generated_wav)
-    return send_file("../temp.wav")
+    return send_file("../audio.wav")
