@@ -28,6 +28,6 @@ def index():
     specs = synthesizer.synthesize_spectrograms([text], [embed])
     generated_wav = vocoder.infer_waveform(specs[0])
     generated_wav = np.pad(generated_wav, (0, synthesizer.sample_rate), mode="constant")
-    with open('generated.wav','wb+') as f:
+    with open('temp.wav','wb+') as f:
         f.write(generated_wav)
-    return send_file("../audio.wav")
+    return send_file("../temp.wav")
