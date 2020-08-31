@@ -50,6 +50,8 @@ def generate():
 
     res={
         "data":encoded_gen_wav_string,
+        "rate":synthesizer.sample_rate,
+        "text":text
 
     }
     # sf.write("demo_output.wav", generated_wav.astype(np.float32), synthesizer.sample_rate)
