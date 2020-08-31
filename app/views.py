@@ -31,7 +31,6 @@ def generate():
     encoded_gen_wav= base64.b64encode(generated_wav)
     res={
         "data":encoded_gen_wav,
-        "rate":synthesizer.sample_rate
     }
     # sf.write("demo_output.wav", generated_wav.astype(np.float32), synthesizer.sample_rate)
     return jsonify(res),200
