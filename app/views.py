@@ -42,7 +42,7 @@ def generate():
     preprocessed_wav = encoder.preprocess_wav(original_wav, sampling_rate)
     embed = encoder.embed_utterance(preprocessed_wav)
     specs = synthesizer.synthesize_spectrograms([text], [embed])
-    generated_wav = vocoder.infer_waveform(specs[0])
+    generated_wav = vocoder.infer_waveform(specs[0],target=3000, overlap=300)
     generated_wav = np.pad(generated_wav, (0, synthesizer.sample_rate), mode="constant")
     encoded_gen_wav_bytes= base64.b64encode(generated_wav)
     encoded_gen_wav_string = encoded_gen_wav_bytes.decode('utf-8')
