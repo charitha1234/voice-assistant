@@ -1,7 +1,6 @@
 from app import app
 import base64
-from flask_api import status
-from flask import request, render_template,send_file
+from flask import request, render_template,send_file,Response
 from synthesizer.inference import Synthesizer
 from encoder import inference as encoder
 from vocoder import inference as vocoder
@@ -35,13 +34,13 @@ def generate():
         "rate":synthesizer.sample_rate
     }
     # sf.write("demo_output.wav", generated_wav.astype(np.float32), synthesizer.sample_rate)
-    return res
+    return Response(res, status=200, mimetype='application/json')
 @app.route('/newVoice',methods=["GET","POST"])
 def newVoice():
     try:
         s = request.form['base64']
         b = b64decode(s.split(',')[1])
         sf.write("audio.wav", generated_wav.astype(np.float32))
-        return status.HTTP_200_OK
+        return Response("ok", status=200, mimetype='application/json')
     except Exception as e:
-        return status.HTTP_500_INTERNAL_SERVER_ERROR
+        return Response("ok", status=500, mimetype='application/json')
