@@ -37,6 +37,7 @@ def generate():
     except InvalidArgument:
         raise
     text=response.query_result.fulfillment_text
+    print("TEXXT>>>>",text)
     in_fpath = Path("audio.wav")
     reprocessed_wav = encoder.preprocess_wav(in_fpath)
     original_wav, sampling_rate = librosa.load(in_fpath)
