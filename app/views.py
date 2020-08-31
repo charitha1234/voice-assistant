@@ -10,6 +10,13 @@ import librosa
 import soundfile as sf
 from base64 import b64decode
 import uuid
+import os
+import dialogflow
+from google.api_core.exceptions import InvalidArgument
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = 'newagent-skrb-2d1636900f1a.json'
+DIALOGFLOW_PROJECT_ID = 'newagent-skrb'
+DIALOGFLOW_LANGUAGE_CODE = 'en'
+SESSION_ID = 'me'
 encoder_weights = Path("encoder/saved_models/pretrained.pt")
 vocoder_weights = Path("vocoder/saved_models/pretrained/pretrained.pt")
 syn_dir = Path("synthesizer/saved_models/logs-pretrained/taco_pretrained")
@@ -19,7 +26,17 @@ vocoder.load_model(vocoder_weights)
 
 @app.route('/generate',methods=["GET","POST"])
 def generate():
-    text = "Tonight, I am asking you to believe in Joe and Kamala’s ability to lead this country"
+    text_to_be_analyzed = request.form['text']
+
+    session_client = dialogflow.SessionsClient()
+    session = session_client.session_path(DIALOGFLOW_PROJECT_ID, SESSION_ID)
+    text_input = dialogflow.types.TextInput(text=text_to_be_analyzed, language_code=DIALOGFLOW_LANGUAGE_CODE)
+    query_input = dialogflow.types.QueryInput(text=text_input)
+    try:
+        response = session_client.detect_intent(session=session, query_input=query_input)
+    except InvalidArgument:
+        raise
+    text=response.query_result.fulfillment_text
     in_fpath = Path("audio.wav")
     reprocessed_wav = encoder.preprocess_wav(in_fpath)
     original_wav, sampling_rate = librosa.load(in_fpath)
@@ -33,6 +50,7 @@ def generate():
 
     res={
         "data":encoded_gen_wav_string,
+
     }
     # sf.write("demo_output.wav", generated_wav.astype(np.float32), synthesizer.sample_rate)
     return jsonify(res),200
@@ -41,7 +59,7 @@ def newVoice():
     try:
         s = request.form['base64']
         b = b64decode(s.split(',')[1])
-        sf.write("audio.wav", generated_wav.astype(np.float32))
+        sf.write("audio1.wav", b)
         return Response("ok", status=200, mimetype='application/json')
     except Exception as e:
         return Response("ok", status=500, mimetype='application/json')

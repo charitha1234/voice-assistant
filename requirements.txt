@@ -18,3 +18,5 @@ numba==0.48
 torch==1.6.0
 SoundFile
 ffmpeg
+google-api-core
+dialogflow
