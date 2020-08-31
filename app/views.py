@@ -1,6 +1,6 @@
 from app import app
 import base64
-from flask import request, render_template,send_file,Response
+from flask import request, render_template,send_file,Response,jsonify
 from synthesizer.inference import Synthesizer
 from encoder import inference as encoder
 from vocoder import inference as vocoder
@@ -29,13 +29,12 @@ def generate():
     generated_wav = vocoder.infer_waveform(specs[0])
     generated_wav = np.pad(generated_wav, (0, synthesizer.sample_rate), mode="constant")
     encoded_gen_wav= base64.b64encode(generated_wav)
-    print("base64>>>>>>>>>",encoded_gen_wav)
     res={
         "data":encoded_gen_wav,
         "rate":synthesizer.sample_rate
     }
     # sf.write("demo_output.wav", generated_wav.astype(np.float32), synthesizer.sample_rate)
-    return Response(res, status=200, mimetype='application/json')
+    return jsonify(res),200
 @app.route('/newVoice',methods=["GET","POST"])
 def newVoice():
     try:
