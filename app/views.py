@@ -26,7 +26,7 @@ vocoder.load_model(vocoder_weights)
 
 @app.route('/generate',methods=["GET","POST"])
 def generate():
-    text_to_be_analyzed = request.json['text']
+    text_to_be_analyzed = request.get_json()['text']
 
     session_client = dialogflow.SessionsClient()
     session = session_client.session_path(DIALOGFLOW_PROJECT_ID, SESSION_ID)
@@ -59,7 +59,7 @@ def generate():
 @app.route('/newVoice',methods=["GET","POST"])
 def newVoice():
     try:
-        s = request.json['base64']
+        s = request.get_json()['base64']
         b = b64decode(s.split(',')[1])
         sf.write("audio1.wav", b)
         return Response("ok", status=200, mimetype='application/json')
