@@ -9,7 +9,7 @@ from pathlib import Path
 import numpy as np
 import librosa
 import soundfile as sf
-import base64 import b64decode
+from base64 import b64decode
 import uuid
 encoder_weights = Path("encoder/saved_models/pretrained.pt")
 vocoder_weights = Path("vocoder/saved_models/pretrained/pretrained.pt")
