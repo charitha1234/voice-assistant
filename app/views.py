@@ -26,8 +26,8 @@ vocoder.load_model(vocoder_weights)
 
 @app.route('/generate',methods=["GET","POST"])
 def generate():
-    text_to_be_analyzed = request.get_json()['text']
-
+    text_to_be_analyzed = request.get_json()
+    print("TEXTTTTT",text_to_be_analyzed)
     session_client = dialogflow.SessionsClient()
     session = session_client.session_path(DIALOGFLOW_PROJECT_ID, SESSION_ID)
     text_input = dialogflow.types.TextInput(text=text_to_be_analyzed, language_code=DIALOGFLOW_LANGUAGE_CODE)
