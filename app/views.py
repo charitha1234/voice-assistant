@@ -28,9 +28,11 @@ def generate():
     specs = synthesizer.synthesize_spectrograms([text], [embed])
     generated_wav = vocoder.infer_waveform(specs[0])
     generated_wav = np.pad(generated_wav, (0, synthesizer.sample_rate), mode="constant")
-    encoded_gen_wav= base64.b64encode(generated_wav)
+    encoded_gen_wav_bytes= base64.b64encode(generated_wav)
+    encoded_gen_wav_string = encoded_gen_wav_bytes.decode('utf-8')
+
     res={
-        "data":encoded_gen_wav,
+        "data":encoded_gen_wav_string,
     }
     # sf.write("demo_output.wav", generated_wav.astype(np.float32), synthesizer.sample_rate)
     return jsonify(res),200
