@@ -38,7 +38,7 @@ def generate():
     text=response.query_result.fulfillment_text
     in_fpath = Path("audio.wav")
     reprocessed_wav = encoder.preprocess_wav(in_fpath)
-    original_wav, sampling_rate = librosa.load(in_fpath,sr=8000)
+    original_wav, sampling_rate = librosa.load(in_fpath)
     preprocessed_wav = encoder.preprocess_wav(original_wav, sampling_rate)
     embed = encoder.embed_utterance(preprocessed_wav)
     specs = synthesizer.synthesize_spectrograms([text], [embed])
