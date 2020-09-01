@@ -4,6 +4,7 @@ from flask import request, render_template,send_file,Response,jsonify
 from synthesizer.inference import Synthesizer
 from encoder import inference as encoder
 from vocoder import inference as vocoder
+from pydub import AudioSegment
 from pathlib import Path
 import numpy as np
 import librosa
@@ -44,8 +45,15 @@ def generate():
     specs = synthesizer.synthesize_spectrograms([text], [embed])
     generated_wav = vocoder.infer_waveform(specs[0],target=3000, overlap=300)
     generated_wav = np.pad(generated_wav, (0, synthesizer.sample_rate), mode="constant")
-    encoded_gen_wav_bytes= base64.b64encode(generated_wav)
-    encoded_gen_wav_string = str(encoded_gen_wav_bytes,'ascii', 'ignore')
+    sf.write("temp.wav", generated_wav,synthesizer.sample_rate)
+    AudioSegment.from_wav("temp.wav").export("temp.mp3", format="mp3")
+    encoded_gen_wav_string="data:audio/wav;base64,"
+    with open("temp.mp3", "rb") as f1:
+        encoded_f1 = base64.b64encode(f1.read())
+        encoded_gen_wav_string+=str(encoded_f1,'ascii', 'ignore')
+        
+    # encoded_gen_wav_bytes= base64.b64encode(generated_wav)
+    # encoded_gen_wav_string = str(encoded_gen_wav_bytes,'ascii', 'ignore')
 
     res={
         "data":encoded_gen_wav_string,

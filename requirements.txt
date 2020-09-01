@@ -20,3 +20,4 @@ SoundFile
 ffmpeg
 google-api-core
 dialogflow
+pydub
