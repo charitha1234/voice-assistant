@@ -45,7 +45,7 @@ def generate():
     generated_wav = vocoder.infer_waveform(specs[0],target=3000, overlap=300)
     generated_wav = np.pad(generated_wav, (0, synthesizer.sample_rate), mode="constant")
     encoded_gen_wav_bytes= base64.b64encode(generated_wav)
-    encoded_gen_wav_string = encoded_gen_wav_bytes.decode('utf-8')
+    encoded_gen_wav_string = str(encoded_gen_wav_bytes,'ascii', 'ignore')
 
     res={
         "data":encoded_gen_wav_string,
