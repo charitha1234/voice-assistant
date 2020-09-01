@@ -47,7 +47,7 @@ def generate():
     generated_wav = np.pad(generated_wav, (0, synthesizer.sample_rate), mode="constant")
     sf.write("temp.wav", generated_wav,synthesizer.sample_rate)
     AudioSegment.from_wav("temp.wav").export("temp.mp3", format="mp3")
-    encoded_gen_wav_string="data:audio/wav;base64,"
+    encoded_gen_wav_string="data:audio/mp3;base64,"
     with open("temp.mp3", "rb") as f1:
         encoded_f1 = base64.b64encode(f1.read())
         encoded_gen_wav_string+=str(encoded_f1,'ascii', 'ignore')
