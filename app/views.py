@@ -72,4 +72,5 @@ def newVoice():
         sf.write("audio1.wav", b)
         return Response("ok", status=200, mimetype='application/json')
     except Exception as e:
+        print("ERROR",e)
         return Response("error", status=500, mimetype='application/json')
