@@ -65,13 +65,8 @@ def generate():
     return jsonify(res),200
 @app.route('/newVoice',methods=["GET","POST"])
 def newVoice():
-    try:
-        base64_string = request.get_json()['base64']
-        rate= request.get_json()['rate']
-        print("type",type(rate))
-        buffer = b64decode(base64_string.split(',')[1])
-        sf.write("audio1.wav", buffer,rate)
-        return Response("ok", status=200, mimetype='application/json')
-    except Exception as e:
-        print("ERROR",e)
-        return Response("error", status=500, mimetype='application/json')
+    base64_string = request.get_json()['base64']
+    rate= request.get_json()['rate']
+    buffer = b64decode(base64_string.split(',')[1])
+    sf.write("audio1.wav", buffer,rate)
+    return Response("ok", status=200, mimetype='application/json')
