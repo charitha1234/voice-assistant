@@ -68,7 +68,8 @@ def newVoice():
     try:
         s = request.get_json()['base64']
         b = b64decode(s.split(',')[1])
+        print("BASE64",b)
         sf.write("audio1.wav", b)
         return Response("ok", status=200, mimetype='application/json')
     except Exception as e:
-        return Response("ok", status=500, mimetype='application/json')
+        return Response("error", status=500, mimetype='application/json')
