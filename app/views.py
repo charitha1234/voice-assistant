@@ -66,10 +66,10 @@ def generate():
 @app.route('/newVoice',methods=["GET","POST"])
 def newVoice():
     try:
-        s = request.get_json()['base64']
-        b = b64decode(s.split(',')[1])
-        print("BASE64",b)
-        sf.write("audio1.wav", b)
+        base64_string = request.get_json()['base64']
+        rate= request.get_json()['rate']
+        buffer = b64decode(s.split(',')[1])
+        sf.write("audio1.wav", buffer)
         return Response("ok", status=200, mimetype='application/json')
     except Exception as e:
         print("ERROR",e)
