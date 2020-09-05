@@ -43,7 +43,7 @@ def generate():
     preprocessed_wav = encoder.preprocess_wav(original_wav, sampling_rate)
     embed = encoder.embed_utterance(preprocessed_wav)
     specs = synthesizer.synthesize_spectrograms([text], [embed])
-    generated_wav = vocoder.infer_waveform(specs[0])
+    generated_wav = vocoder.infer_waveform(specs[0],target=4000)
     generated_wav = np.pad(generated_wav, (0, synthesizer.sample_rate), mode="constant")
     generated_wav = encoder.preprocess_wav(generated_wav)
     sf.write("temp.wav", generated_wav,synthesizer.sample_rate)
