@@ -45,6 +45,7 @@ def generate():
     specs = synthesizer.synthesize_spectrograms([text], [embed])
     generated_wav = vocoder.infer_waveform(specs[0],target=3000, overlap=300)
     generated_wav = np.pad(generated_wav, (0, synthesizer.sample_rate), mode="constant")
+    generated_wav = encoder.preprocess_wav(generated_wav)
     sf.write("temp.wav", generated_wav,synthesizer.sample_rate)
     AudioSegment.from_wav("temp.wav").export("temp.mp3", format="mp3")
     encoded_gen_wav_string="data:audio/mp3;base64,"
