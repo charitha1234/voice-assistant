@@ -48,6 +48,8 @@ def generate():
     generated_wav = encoder.preprocess_wav(generated_wav)
     if os.path.exists("temp.wav"):
         os.remove("temp.wav")
+    else:
+        print("The file does not exist")
     if os.path.exists("temp.mp3"):
         os.remove("temp.mp3")
     sf.write("temp.wav", generated_wav,synthesizer.sample_rate)
